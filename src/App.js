@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Note from './components/Note'
+import NoteList from './components/NoteList'
+
 
 class App extends Component {
 
@@ -16,7 +17,7 @@ class App extends Component {
     if (this.state.noteText ==='') {return}
 
     let notesArr = this.state.notes;
-    notesArr.push(this.state.noteText);
+    notesArr.push({ text: this.state.noteText , completed: false});
     this.setState({
       noteText: ''
     });
@@ -29,16 +30,27 @@ class App extends Component {
 
   deleteNote(index) {
     let notesArr = this.state.notes;
+    console.log('triying to delete note #', notesArr);
     notesArr.splice(index, 1);
+    console.log(index)
     this.setState({
       notes: notesArr
     })
   };
 
+  toggleNote(index) {
+    let notesArr = this.state.notes;
+    console.log('Toggle number #', notesArr);
+     // notesArr[index].completed = !notesArr[index].completed;
+    this.setState({
+      notes: notesArr
+    })
+  }
+
   handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       let notesArr = this.state.notes;
-      notesArr.push(this.state.noteText);
+      notesArr.push({ text: this.state.noteText , completed: false});
       this.setState({
         noteText: ''
       });
@@ -46,18 +58,21 @@ class App extends Component {
     }
   }
 
+  clickHandler(event){
+    console.log(event.target);
+    if (event.target.value === 'delete'){
+      this.deleteNote(event);
+    }
+  }
+
   render() {
-    let notes = this.state.notes.map((val, key) => {
-      return <Note key={key}  text={val}
-      deleteMethod={ () => this.deleteNote(key)}
-      />
-    })
+
 
     return (
       <div className="container">
         <div className="header">React To-Do App
         </div>
-        {notes}
+        <NoteList notes={this.state.notes} handleClick={this.clickHandler.bind(this)} />
         <div className="btn btn-primary" onClick={this.addNote.bind(this)}  >
         +
       </div>
