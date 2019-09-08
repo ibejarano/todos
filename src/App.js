@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import NoteList from './components/NoteList'
-import { isNumber } from 'util';
-
 
 class App extends Component {
 
@@ -12,7 +10,7 @@ class App extends Component {
       noteText: '',
       notes: [{text: 'Go th the Gym' , completed: false},
       {text: 'Clean desktop and monitor' , completed: false},
-      {text: 'Buy groceries and food for lunch' , completed: false},
+      {text: 'Buy groceries and food for lunch' , completed: true},
       {text: 'Run 3 kilometers at 6PM' , completed: false}]
     }
   }
@@ -32,24 +30,24 @@ class App extends Component {
     this.setState({ noteText: noteText.target.value})
   }
 
-  deleteNote(index) {
+  deleteNote(e) {
     let notesArr = this.state.notes;
     //console.log('triying to delete note #', notesArr);
-    notesArr.splice(index, 1);
-    //console.log(index)
+    notesArr.splice(e.target.value, 1);
     this.setState({
       notes: notesArr
     })
   };
 
-  toggleNote(index) {
+  toggleNote(e) {
     let notesArr = this.state.notes;
-    console.log('Toggle number #', notesArr);
-    notesArr[index].completed = !notesArr[index].completed;
+    //console.log('triying to delete note #', notesArr);
+    // notesArr.splice(index, 1);
+    notesArr[e.target.value].completed = !notesArr[e.target.value].completed 
     this.setState({
       notes: notesArr
     })
-  }
+  };
 
   handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -62,18 +60,6 @@ class App extends Component {
     }
   }
 
-  clickHandler(event){
-    // console.log(event.target);
-    console.log(typeof(event.target.value))
-    if ( typeof(event.target.value) === 'number' ){
-      console.log(event.target.value)
-      this.toggleNote(event.target.value.listId)
-    }
-    else {
-      this.deleteNote(event);
-    }
-  }
-
   render() {
 
 
@@ -81,7 +67,9 @@ class App extends Component {
       <div className="container">
       <div className="header">React To-Do App
       </div>
-      <NoteList notes={this.state.notes} handleClick={this.clickHandler.bind(this)} />
+      <NoteList notes={this.state.notes} delButton={this.deleteNote.bind(this)}
+      toggleButton={this.toggleNote.bind(this)}
+      />
       
       <div className="add-note">
       <div className="add-button" onClick={this.addNote.bind(this)}>

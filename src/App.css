@@ -29,3 +29,10 @@
     border: 5px solid red;
     font-size: 36px;
 }
+
+
+/* NOTES STYLES */ 
+
+.note-completed {
+    text-decoration: line-through;
+}

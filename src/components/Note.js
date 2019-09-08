@@ -3,19 +3,17 @@ import React, { Component } from 'react';
 
 class Note extends Component {
   render (){
-    let { handler } = this.props
+    let { toggle, del } = this.props
     let { text , completed} = this.props.note;
     let { listId  } = this.props
-
-
+    let styleNote = "note "+(completed ? "note-completed":"")
+    console.log(listId)
     return(
-      <div className="note">
-      <li>
-      <button onClick={ handler } value={listId}>Check</button>
-{text}
-      <button onClick={ handler } value="delete">Del</button>
+      <li className={styleNote}>
+      {text}
+      <button onClick={ toggle } value={ listId }>Check </button>
+      <button onClick={ del } value={ listId }> Del</button>
       </li>
-      </div>
         )
   }
 }
