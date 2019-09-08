@@ -7,7 +7,6 @@ class Note extends Component {
     let { text , completed} = this.props.note;
     let { listId  } = this.props
     let styleNote = "note "+(completed ? "note-completed":"")
-    console.log(listId)
     return(
       <li className={styleNote}>
       {text}

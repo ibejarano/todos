@@ -60,6 +60,38 @@ class App extends Component {
     }
   }
 
+  toggleAll(){
+    // 1. Look if array length is at least 1.
+    let notesArr = this.state.notes;
+    if (notesArr.length > 0){
+      // 2. if at least 1 is uncompleted we make all completed
+      let checkedNotes = 0
+      for (let i= 0 ; i< notesArr.length; i++){
+        if(notesArr[i].completed){
+          checkedNotes+=1; 
+        }
+      }
+      console.log(checkedNotes)
+      if (checkedNotes === notesArr.length){
+        console.log("here")
+        let toggleArr = notesArr.map(note => ({text: note.text , completed : false}))
+        this.setState({
+          notes: toggleArr
+        })
+      }
+      else {
+        console.log("not here?")
+        let toggleArr = notesArr.map(note => ({text:note.text, completed: true}))
+        this.setState({
+          notes: toggleArr
+        })
+      }
+      // 3. else we make all unchecked
+
+    }
+  }
+
+
   render() {
 
 
@@ -67,7 +99,7 @@ class App extends Component {
       <div className="container">
       <div className="header">React To-Do App
       </div>
-      <NoteList notes={this.state.notes} delButton={this.deleteNote.bind(this)}
+      <NoteList notes={this.state.notes} toggleAll={this.toggleAll.bind(this)} delButton={this.deleteNote.bind(this)}
       toggleButton={this.toggleNote.bind(this)}
       />
       
