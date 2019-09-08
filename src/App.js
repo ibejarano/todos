@@ -71,16 +71,13 @@ class App extends Component {
           checkedNotes+=1; 
         }
       }
-      console.log(checkedNotes)
       if (checkedNotes === notesArr.length){
-        console.log("here")
         let toggleArr = notesArr.map(note => ({text: note.text , completed : false}))
         this.setState({
           notes: toggleArr
         })
       }
       else {
-        console.log("not here?")
         let toggleArr = notesArr.map(note => ({text:note.text, completed: true}))
         this.setState({
           notes: toggleArr
