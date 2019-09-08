@@ -4,16 +4,17 @@ import React, { Component } from 'react';
 class Note extends Component {
   render (){
     let { handler } = this.props
-    let { text , completed } = this.props.note;
-    let styledComp = "list-group-item d-flex justify-content-between align-items-center" + (completed? "":" disabled");
+    let { text , completed} = this.props.note;
+    let { listId  } = this.props
+
 
     return(
       <div className="note">
-      <button className="btn btn-info"onClick={ handler } value="toggle">Toggle Completed</button>
-      <li  className={styledComp}>
+      <li>
+      <button onClick={ handler } value={listId}>Check</button>
 {text}
+      <button onClick={ handler } value="delete">Del</button>
       </li>
-      <button className="btn btn-danger" onClick={ handler } value="delete">Delete Task</button>
       </div>
         )
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import NoteList from './components/NoteList'
+import { isNumber } from 'util';
 
 
 class App extends Component {
@@ -9,7 +10,10 @@ class App extends Component {
     super(props);
     this.state = {
       noteText: '',
-      notes: []
+      notes: [{text: 'Go th the Gym' , completed: false},
+      {text: 'Clean desktop and monitor' , completed: false},
+      {text: 'Buy groceries and food for lunch' , completed: false},
+      {text: 'Run 3 kilometers at 6PM' , completed: false}]
     }
   }
 
@@ -30,9 +34,9 @@ class App extends Component {
 
   deleteNote(index) {
     let notesArr = this.state.notes;
-    console.log('triying to delete note #', notesArr);
+    //console.log('triying to delete note #', notesArr);
     notesArr.splice(index, 1);
-    console.log(index)
+    //console.log(index)
     this.setState({
       notes: notesArr
     })
@@ -41,7 +45,7 @@ class App extends Component {
   toggleNote(index) {
     let notesArr = this.state.notes;
     console.log('Toggle number #', notesArr);
-     // notesArr[index].completed = !notesArr[index].completed;
+    notesArr[index].completed = !notesArr[index].completed;
     this.setState({
       notes: notesArr
     })
@@ -59,8 +63,13 @@ class App extends Component {
   }
 
   clickHandler(event){
-    console.log(event.target);
-    if (event.target.value === 'delete'){
+    // console.log(event.target);
+    console.log(typeof(event.target.value))
+    if ( typeof(event.target.value) === 'number' ){
+      console.log(event.target.value)
+      this.toggleNote(event.target.value.listId)
+    }
+    else {
       this.deleteNote(event);
     }
   }
@@ -70,19 +79,23 @@ class App extends Component {
 
     return (
       <div className="container">
-        <div className="header">React To-Do App
-        </div>
-        <NoteList notes={this.state.notes} handleClick={this.clickHandler.bind(this)} />
-        <div className="btn btn-primary" onClick={this.addNote.bind(this)}  >
-        +
+      <div className="header">React To-Do App
+      </div>
+      <NoteList notes={this.state.notes} handleClick={this.clickHandler.bind(this)} />
+      
+      <div className="add-note">
+      <div className="add-button" onClick={this.addNote.bind(this)}>
+         + 
       </div>
       <input type="text" 
       ref={((input) => {this.textInput = input})}
-      className="textInput"
+      className="text-input"
       value={this.state.noteText}
       onChange={noteText => this.updateNoteText(noteText)}
       onKeyPress={this.handleKeyPress.bind(this)}
+      placeholder="Add a new task"
       />
+      </div>
       </div>
     )
   }

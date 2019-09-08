@@ -6,12 +6,12 @@ class NoteList extends Component {
         let { notes, handleClick } = this.props
 
         let notesComponents = notes.map((val, key) => {
-            return <Note key={key} note={val} handler={ handleClick }
+            return <Note key={key} listId={key} note={val} handler={ handleClick }
             />
           })
 
         return (
-            <ul className="list-group">
+            <ul className="notes-list">
                 {notesComponents}
             </ul>
         )
