@@ -94,25 +94,24 @@ class App extends Component {
 
     return (
       <div className="container">
-      <div className="header">React To-Do App
-      </div>
+        <div className="header">React To-Do App</div>
+
+        <div className="add-note">
+          <div className="add-button" onClick={this.addNote.bind(this)}>
+          + 
+          </div>
+          <input type="text" 
+          ref={((input) => {this.textInput = input})}
+          className="text-input"
+          value={this.state.noteText}
+          onChange={noteText => this.updateNoteText(noteText)}
+          onKeyPress={this.handleKeyPress.bind(this)}
+          placeholder="Add a new task"
+          />
+        </div>
       <NoteList notes={this.state.notes} toggleAll={this.toggleAll.bind(this)} delButton={this.deleteNote.bind(this)}
       toggleButton={this.toggleNote.bind(this)}
       />
-      
-      <div className="add-note">
-      <div className="add-button" onClick={this.addNote.bind(this)}>
-         + 
-      </div>
-      <input type="text" 
-      ref={((input) => {this.textInput = input})}
-      className="text-input"
-      value={this.state.noteText}
-      onChange={noteText => this.updateNoteText(noteText)}
-      onKeyPress={this.handleKeyPress.bind(this)}
-      placeholder="Add a new task"
-      />
-      </div>
       </div>
     )
   }
