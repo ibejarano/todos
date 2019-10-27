@@ -36,3 +36,13 @@
 .note-completed {
     text-decoration: line-through;
 }
+
+.todo-item {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.todo-item p{
+    margin: 0 .5rem;
+}

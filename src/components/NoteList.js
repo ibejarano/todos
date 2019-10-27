@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Note from './Note';
+import Todo from './Todo';
 
 class NoteList extends Component {
     render() {
@@ -11,10 +12,17 @@ class NoteList extends Component {
             />
           })
 
+        let newTodos = notes.map((val, key) => {
+            return(
+                <Todo completed={val.completed} text={val.text} />
+            )
+        } )
+
         return (
             <ul className="notes-list">
                 <button onClick={toggleAll} > toggle all</button>
                 {notesComponents}
+                {newTodos}
             </ul>
         )
     }
