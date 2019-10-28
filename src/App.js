@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
-import NoteList from './components/NoteList';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Todo from './components/Todo';
+import { List } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+
+
+const styles = {
+  root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+  },
+}
 
 class App extends Component {
 
@@ -40,12 +51,12 @@ class App extends Component {
   };
 
   toggleNote(e) {
-    let notesArr = this.state.notes;
-    //console.log('triying to delete note #', notesArr);
+    // let notesArr = this.state.notes;
     // notesArr.splice(index, 1);
-    notesArr[e.target.value].completed = !notesArr[e.target.value].completed 
+    const copyNotes = this.state.notes
+    copyNotes[e.target.value].completed = !copyNotes[e.target.value].completed  
     this.setState({
-      notes: notesArr
+      notes: copyNotes
     })
   };
 
@@ -91,28 +102,25 @@ class App extends Component {
 
   render() {
 
+    let newTodos = this.state.notes.map((val, key) => {
+      return(
+          <Todo key={key} ind={key} completed={val.completed} text={val.text} toggleCheck={this.toggleNote.bind(this)}/>
+      )
+    } )
 
     return (
-      <div className="container">
-        <div className="header">React To-Do App</div>
-
-        <div className="add-note">
-          <div className="add-button" onClick={this.addNote.bind(this)}>
-          + 
-          </div>
-          <input type="text" 
-          ref={((input) => {this.textInput = input})}
-          className="text-input"
-          value={this.state.noteText}
-          onChange={noteText => this.updateNoteText(noteText)}
-          onKeyPress={this.handleKeyPress.bind(this)}
-          placeholder="Add a new task"
-          />
+      <MuiThemeProvider>
+        <div style={styles.root}>
+          <List>  
+            <Subheader>Todo List</Subheader>
+            <input type="text" 
+            
+            />
+              {/* <button onClick={toggleAll} > toggle all</button> */}
+              {newTodos}
+          </List>    
         </div>
-      <NoteList notes={this.state.notes} toggleAll={this.toggleAll.bind(this)} delButton={this.deleteNote.bind(this)}
-      toggleButton={this.toggleNote.bind(this)}
-      />
-      </div>
+      </MuiThemeProvider>
     )
   }
 }

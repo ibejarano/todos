@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 class Note extends Component {
   render (){
     let { toggle, del } = this.props
