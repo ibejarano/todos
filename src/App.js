@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Todo from './components/Todo';
-import { List } from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
+import TodoList from './components/Todo'
 
 
-const styles = {
-  root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-  },
-}
 
 class App extends Component {
 
@@ -19,12 +11,14 @@ class App extends Component {
     super(props);
     this.state = {
       noteText: '',
-      notes: [{text: 'Go th the Gym' , completed: false},
+      notes: [{text: 'Go to the Gym' , completed: false},
       {text: 'Clean desktop and monitor' , completed: false},
       {text: 'Buy groceries and food for lunch' , completed: true},
       {text: 'Run 3 kilometers at 6PM' , completed: false}]
+  };  
     }
-  }
+
+
 
   addNote() {
     if (this.state.noteText ==='') {return}
@@ -41,21 +35,20 @@ class App extends Component {
     this.setState({ noteText: noteText.target.value})
   }
 
-  deleteNote(i) {
-    let notesArr = this.state.notes;
-    //console.log('triying to delete note #', notesArr);
-    notesArr.splice(i, 1);
-    console.log(i);
+  deleteNote(id) {
+    let notesArr = [...this.state.notes];
+    notesArr.splice(id, 1);
+    console.log(id);
     this.setState({
-      notes: notesArr
-    })
+       notes: notesArr
+     })
   };
 
-  toggleNote(e) {
+  toggleNote(id) {
     // let notesArr = this.state.notes;
     // notesArr.splice(index, 1);
-    const copyNotes = this.state.notes
-    copyNotes[e.target.value].completed = !copyNotes[e.target.value].completed  
+    const copyNotes = [...this.state.notes]
+    copyNotes[id].completed = !copyNotes[id].completed  
     this.setState({
       notes: copyNotes
     })
@@ -99,28 +92,17 @@ class App extends Component {
 
     }
   }
-
+  
 
   render() {
 
-    let newTodos = this.state.notes.map((val, key) => {
-      return(
-          <Todo deleteNote={this.deleteNote.bind(this)} key={key} ind={key} completed={val.completed} text={val.text} toggleCheck={this.toggleNote.bind(this)}/>
-      )
-    } )
-
     return (
+      
       <MuiThemeProvider>
-        <div style={styles.root}>
-          <List>  
-            <Subheader>Todo List</Subheader>
-            <input type="text" 
-            
-            />
-              {/* <button onClick={toggleAll} > toggle all</button> */}
-              {newTodos}
-          </List>    
-        </div>
+          <TodoList notes={this.state.notes}
+          toggleCheck={this.toggleNote.bind(this) }
+          deleteNote={ this.deleteNote.bind(this) }
+          />
       </MuiThemeProvider>
     )
   }
