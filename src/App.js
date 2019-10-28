@@ -41,10 +41,11 @@ class App extends Component {
     this.setState({ noteText: noteText.target.value})
   }
 
-  deleteNote(e) {
+  deleteNote(i) {
     let notesArr = this.state.notes;
     //console.log('triying to delete note #', notesArr);
-    notesArr.splice(e.target.value, 1);
+    notesArr.splice(i, 1);
+    console.log(i);
     this.setState({
       notes: notesArr
     })
@@ -104,7 +105,7 @@ class App extends Component {
 
     let newTodos = this.state.notes.map((val, key) => {
       return(
-          <Todo key={key} ind={key} completed={val.completed} text={val.text} toggleCheck={this.toggleNote.bind(this)}/>
+          <Todo deleteNote={this.deleteNote.bind(this)} key={key} ind={key} completed={val.completed} text={val.text} toggleCheck={this.toggleNote.bind(this)}/>
       )
     } )
 
