@@ -9,4 +9,9 @@
 
 # New Features
 
-- New todo component styled
+- Implement Material UI Design
+  - Add a Delete icon - **DONE!**
+  - Add a Checkbox - **DONE!**
+  - Improve the Add Todo list
+  - User can Edit a Todo
+  - User can make sub Todos
