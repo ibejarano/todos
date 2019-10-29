@@ -106,6 +106,7 @@ class App extends Component {
           />
           <AddTodo addNote={this.addNote.bind(this)}
                   updateNoteText={this.updateNoteText.bind(this)}
+                  text={this.state.noteText}
           />
           </Typography>
       </Container>

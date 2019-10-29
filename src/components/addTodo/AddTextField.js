@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function AddTextField({ updateNoteText }) {
+export default function AddTextField({ updateNoteText, text }) {
   const classes = useStyles();
 
   return (
@@ -25,7 +25,10 @@ export default function AddTextField({ updateNoteText }) {
           margin="normal"
           variant="outlined"
           type="text"
-          onChange={(e) => updateNoteText(e.target.value)}
+          onChange={(e) => {updateNoteText(e.target.value)
+            
+          }}
+          value={text}
         />
   );
 }

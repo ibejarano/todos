@@ -3,14 +3,13 @@ import React from 'react';
 import AddTextField from './addTodo/AddTextField';
 import AddButton from './addTodo/AddButton';
 
-const AddTodo = ( { addNote, updateNoteText } ) => {
+const AddTodo = ( { addNote, updateNoteText, text } ) => {
     return (
     <form onSubmit={ (e) => {
         e.preventDefault();
-        console.log(e.target.div)
-        addNote('NewTodo')} }>
+        addNote()} }>
         <AddButton type='submit' />
-        <AddTextField updateNoteText={updateNoteText} />
+        <AddTextField updateNoteText={updateNoteText} text={text} />
     </form>
     )
 
