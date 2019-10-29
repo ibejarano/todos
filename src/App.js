@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import AddTodo from './components/AddTodo';
 import EditPopper from './components/editTodo/EditPopper';
+import ToggleButtons from './components/ToggleButtons';
 
 class App extends Component {
 
@@ -103,31 +104,28 @@ class App extends Component {
     }
   }
 
-  toggleAll(){
+  toggleAll(check){
     // 1. Look if array length is at least 1.
     let notesArr = this.state.notes;
-    if (notesArr.length > 0){
-      // 2. if at least 1 is uncompleted we make all completed
-      let checkedNotes = 0
-      for (let i= 0 ; i< notesArr.length; i++){
-        if(notesArr[i].completed){
-          checkedNotes+=1; 
-        }
-      }
-      if (checkedNotes === notesArr.length){
-        let toggleArr = notesArr.map(note => ({text: note.text , completed : false}))
-        this.setState({
-          notes: toggleArr
-        })
-      }
-      else {
-        let toggleArr = notesArr.map(note => ({text:note.text, completed: true}))
-        this.setState({
-          notes: toggleArr
-        })
-      }
-      // 3. else we make all unchecked
+    let toggleArr = notesArr.map(note => ({text:note.text, completed: check}))
+    this.setState({
+      notes: toggleArr
+    })   
+  }
 
+  deleteAll(){
+    this.setState({
+      notes: []
+    })
+  }
+
+  handleGroupButton(action){
+    if (action==='check'){this.toggleAll(true)}
+    else if(action==='uncheck'){
+      this.toggleAll(false)
+    }
+    else if(action==='delete'){
+      this.deleteAll()
     }
   }
   
@@ -139,6 +137,7 @@ class App extends Component {
       <CssBaseline />
       <Container maxWidth="sm">
         <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
+        <ToggleButtons handleGroupButton={this.handleGroupButton.bind(this)} />
         <TodoList notes={this.state.notes}
           toggleCheck={this.toggleNote.bind(this) }
           deleteNote={ this.deleteNote.bind(this) }

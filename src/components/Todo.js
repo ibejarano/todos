@@ -37,7 +37,7 @@ const TodoList = ({notes, toggleCheck, deleteNote, handleEdit}) => {
               onClick={(e) => handleEdit(e.currentTarget,val.text, ind) }
               />
             <ListItemSecondaryAction >
-                <IconButton onClick={() => deleteNote(ind)} edge="end" className={classes.button} aria-label="delete" disableRipple> 
+                <IconButton onClick={() => deleteNote(ind)} edge="end" className={classes.button} aria-label="delete"> 
                     <DeleteIcon />     
                 </IconButton>
             </ListItemSecondaryAction>
