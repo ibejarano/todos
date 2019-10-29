@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   typography: {
@@ -10,15 +9,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function EditPopper({ target , isOpen , text}) {
+export default function EditPopper({ target , isOpen , text, handleClose}) {
   const classes = useStyles();
-  const [anchor, setAnchor] = React.useState(null);
-
-
-  const handleClose = () => {
-    anchorEl = null
-    isOpen = false
-  };
 
   const id = isOpen ? 'simple-popover' : undefined;
   let anchorEl = target? target : null;
@@ -39,7 +31,7 @@ export default function EditPopper({ target , isOpen , text}) {
           horizontal: 'center',
         }}
       >
-        <Typography className={classes.typography}>{text}</Typography>
+        <Typography className={classes.typography} onClick={() => handleClose() } >{text}</Typography>
       </Popover>
     </div>
   );

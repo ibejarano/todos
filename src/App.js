@@ -17,8 +17,8 @@ class App extends Component {
       {text: 'Clean desktop and monitor' , completed: false},
       {text: 'Buy groceries and food for lunch' , completed: true},
       {text: 'Run 3 kilometers at 6PM' , completed: false}],
-      openPopper: false,
-      popper: ''
+      isOpen: false,
+      popper: null
   };  
       
     }
@@ -27,13 +27,22 @@ class App extends Component {
     console.log(text);
     console.log(ind);
     this.setState({
-      popper: <EditPopper target={target} text={text} isOpen={true} ind={ind}/>,
+      popper: <EditPopper 
+              target={target} 
+              text={text} 
+              isOpen={true} 
+              ind={ind}
+              handleClose={this.handleClose.bind(this)}
+              />,
       isOpen: true
     })
   }
 
   handleClose(){
-    
+    this.setState({
+      isOpen: false,
+      popper: null
+    })
   }
 
   addNote() {
@@ -124,7 +133,10 @@ class App extends Component {
                   updateNoteText={this.updateNoteText.bind(this)}
                   text={this.state.noteText}
           />
-          {this.state.isOpen ? this.state.popper : null }
+          {this.state.isOpen ? 
+          this.state.popper
+          : null
+          }
           </Typography>
       </Container>
     </React.Fragment>
