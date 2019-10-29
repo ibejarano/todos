@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import NoteList from './components/NoteList'
+import TodoList from './components/Todo'
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import AddTodo from './components/AddTodo';
+import EditPopper from './components/editTodo/EditPopper';
+import ToggleButtons from './components/ToggleButtons';
 
 class App extends Component {
 
@@ -8,44 +14,82 @@ class App extends Component {
     super(props);
     this.state = {
       noteText: '',
-      notes: [{text: 'Go th the Gym' , completed: false},
+      notes: [{text: 'Go to the Gym' , completed: false},
       {text: 'Clean desktop and monitor' , completed: false},
       {text: 'Buy groceries and food for lunch' , completed: true},
-      {text: 'Run 3 kilometers at 6PM' , completed: false}]
+      {text: 'Run 3 kilometers at 6PM' , completed: false}],
+      isOpen: false,
+      popper: null,
+      editText: ''
+  };  
+      
     }
+
+  handleEdit(target,text, ind){
+    this.setState({
+      popper: <EditPopper 
+              target={target} 
+              text={text} 
+              isOpen={true} 
+              ind={ind}
+              handleClose={this.handleClose.bind(this)}
+              handleEditConfirm={this.handleEditConfirm.bind(this)}
+              handleEditChange={this.handleEditChange.bind(this)}
+              />,
+      isOpen: true
+    })
+  }
+
+  handleEditConfirm(ind){
+    const newNotes = [...this.state.notes]
+    newNotes[ind].text = this.state.editText
+    this.setState({
+      notes: newNotes
+    })
+    this.handleClose()
+  }
+
+  handleEditChange(e){
+    this.setState({
+      editText: e.target.value
+    })
+  }
+
+  handleClose(){
+    this.setState({
+      isOpen: false,
+      popper: null
+    })
   }
 
   addNote() {
-    if (this.state.noteText ==='') {return}
-
+    if (this.state.noteText === '') {return}
     let notesArr = this.state.notes;
     notesArr.push({ text: this.state.noteText , completed: false});
     this.setState({
       noteText: ''
     });
-    this.textInput.focus();
   }
 
   updateNoteText(noteText) {
-    this.setState({ noteText: noteText.target.value})
+    this.setState({ noteText: noteText})
   }
 
-  deleteNote(e) {
-    let notesArr = this.state.notes;
-    //console.log('triying to delete note #', notesArr);
-    notesArr.splice(e.target.value, 1);
+  deleteNote(id) {
+    let notesArr = [...this.state.notes];
+    notesArr.splice(id, 1);
     this.setState({
-      notes: notesArr
-    })
+       notes: notesArr
+     })
   };
 
-  toggleNote(e) {
-    let notesArr = this.state.notes;
-    //console.log('triying to delete note #', notesArr);
+  toggleNote(id) {
+    // let notesArr = this.state.notes;
     // notesArr.splice(index, 1);
-    notesArr[e.target.value].completed = !notesArr[e.target.value].completed 
+    const copyNotes = [...this.state.notes]
+    copyNotes[id].completed = !copyNotes[id].completed  
     this.setState({
-      notes: notesArr
+      notes: copyNotes
     })
   };
 
@@ -60,60 +104,56 @@ class App extends Component {
     }
   }
 
-  toggleAll(){
+  toggleAll(check){
     // 1. Look if array length is at least 1.
     let notesArr = this.state.notes;
-    if (notesArr.length > 0){
-      // 2. if at least 1 is uncompleted we make all completed
-      let checkedNotes = 0
-      for (let i= 0 ; i< notesArr.length; i++){
-        if(notesArr[i].completed){
-          checkedNotes+=1; 
-        }
-      }
-      if (checkedNotes === notesArr.length){
-        let toggleArr = notesArr.map(note => ({text: note.text , completed : false}))
-        this.setState({
-          notes: toggleArr
-        })
-      }
-      else {
-        let toggleArr = notesArr.map(note => ({text:note.text, completed: true}))
-        this.setState({
-          notes: toggleArr
-        })
-      }
-      // 3. else we make all unchecked
-
-    }
+    let toggleArr = notesArr.map(note => ({text:note.text, completed: check}))
+    this.setState({
+      notes: toggleArr
+    })   
   }
 
+  deleteAll(){
+    this.setState({
+      notes: []
+    })
+  }
+
+  handleGroupButton(action){
+    if (action==='check'){this.toggleAll(true)}
+    else if(action==='uncheck'){
+      this.toggleAll(false)
+    }
+    else if(action==='delete'){
+      this.deleteAll()
+    }
+  }
+  
 
   render() {
 
-
     return (
-      <div className="container">
-      <div className="header">React To-Do App
-      </div>
-      <NoteList notes={this.state.notes} toggleAll={this.toggleAll.bind(this)} delButton={this.deleteNote.bind(this)}
-      toggleButton={this.toggleNote.bind(this)}
-      />
-      
-      <div className="add-note">
-      <div className="add-button" onClick={this.addNote.bind(this)}>
-         + 
-      </div>
-      <input type="text" 
-      ref={((input) => {this.textInput = input})}
-      className="text-input"
-      value={this.state.noteText}
-      onChange={noteText => this.updateNoteText(noteText)}
-      onKeyPress={this.handleKeyPress.bind(this)}
-      placeholder="Add a new task"
-      />
-      </div>
-      </div>
+      <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth="sm">
+        <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
+        <ToggleButtons handleGroupButton={this.handleGroupButton.bind(this)} />
+        <TodoList notes={this.state.notes}
+          toggleCheck={this.toggleNote.bind(this) }
+          deleteNote={ this.deleteNote.bind(this) }
+          handleEdit = {this.handleEdit.bind(this)}
+          />
+          <AddTodo addNote={this.addNote.bind(this)}
+                  updateNoteText={this.updateNoteText.bind(this)}
+                  text={this.state.noteText}
+          />
+          {this.state.isOpen ? 
+          this.state.popper
+          : null
+          }
+          </Typography>
+      </Container>
+    </React.Fragment>
     )
   }
 }
