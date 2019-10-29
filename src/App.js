@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import AddTodo from './components/AddTodo';
+import EditPopper from './components/editTodo/EditPopper';
 
 class App extends Component {
 
@@ -15,11 +16,25 @@ class App extends Component {
       notes: [{text: 'Go to the Gym' , completed: false},
       {text: 'Clean desktop and monitor' , completed: false},
       {text: 'Buy groceries and food for lunch' , completed: true},
-      {text: 'Run 3 kilometers at 6PM' , completed: false}]
+      {text: 'Run 3 kilometers at 6PM' , completed: false}],
+      openPopper: false,
+      popper: ''
   };  
+      
     }
 
+  handleEdit(target,text, ind){
+    console.log(text);
+    console.log(ind);
+    this.setState({
+      popper: <EditPopper target={target} text={text} isOpen={true} ind={ind}/>,
+      isOpen: true
+    })
+  }
 
+  handleClose(){
+    
+  }
 
   addNote() {
     if (this.state.noteText === '') {return}
@@ -103,11 +118,13 @@ class App extends Component {
         <TodoList notes={this.state.notes}
           toggleCheck={this.toggleNote.bind(this) }
           deleteNote={ this.deleteNote.bind(this) }
+          handleEdit = {this.handleEdit.bind(this)}
           />
           <AddTodo addNote={this.addNote.bind(this)}
                   updateNoteText={this.updateNoteText.bind(this)}
                   text={this.state.noteText}
           />
+          {this.state.isOpen ? this.state.popper : null }
           </Typography>
       </Container>
     </React.Fragment>
