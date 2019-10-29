@@ -14,5 +14,4 @@
   - Add a Checkbox - **DONE!**
   - Improve the Add Todo list -  **DONE!**
   - User can Edit a Todo -  **DONE!**
-  - Add a Toggle All Button
-  - User can make sub Todos
+  - Add a Toggle All Button -  **DONE!**
