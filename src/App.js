@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TodoList from './components/Todo'
-
-
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import AddTodo from './components/AddTodo';
 
 class App extends Component {
 
@@ -21,18 +22,16 @@ class App extends Component {
 
 
   addNote() {
-    if (this.state.noteText ==='') {return}
-
+    if (this.state.noteText === '') {return}
     let notesArr = this.state.notes;
     notesArr.push({ text: this.state.noteText , completed: false});
     this.setState({
       noteText: ''
     });
-    this.textInput.focus();
   }
 
   updateNoteText(noteText) {
-    this.setState({ noteText: noteText.target.value})
+    this.setState({ noteText: noteText})
   }
 
   deleteNote(id) {
@@ -97,13 +96,22 @@ class App extends Component {
   render() {
 
     return (
-      
-      <MuiThemeProvider>
-          <TodoList notes={this.state.notes}
+      <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth="sm">
+        <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
+        <TodoList notes={this.state.notes}
           toggleCheck={this.toggleNote.bind(this) }
           deleteNote={ this.deleteNote.bind(this) }
           />
-      </MuiThemeProvider>
+          <AddTodo addNote={this.addNote.bind(this)}
+                  updateNoteText={this.updateNoteText.bind(this)}
+          />
+          </Typography>
+      </Container>
+    </React.Fragment>
+
+
     )
   }
 }

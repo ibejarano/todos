@@ -48,8 +48,7 @@ const TodoList = ({notes, toggleCheck, deleteNote}) => {
     return(
         <List >  
         <ListSubheader>Todo List</ListSubheader>
-        <input type="text" 
-        />
+
           {newTodos}
       </List>  
     );
