@@ -18,14 +18,13 @@ class App extends Component {
       {text: 'Buy groceries and food for lunch' , completed: true},
       {text: 'Run 3 kilometers at 6PM' , completed: false}],
       isOpen: false,
-      popper: null
+      popper: null,
+      editText: ''
   };  
       
     }
 
   handleEdit(target,text, ind){
-    console.log(text);
-    console.log(ind);
     this.setState({
       popper: <EditPopper 
               target={target} 
@@ -33,8 +32,25 @@ class App extends Component {
               isOpen={true} 
               ind={ind}
               handleClose={this.handleClose.bind(this)}
+              handleEditConfirm={this.handleEditConfirm.bind(this)}
+              handleEditChange={this.handleEditChange.bind(this)}
               />,
       isOpen: true
+    })
+  }
+
+  handleEditConfirm(ind){
+    const newNotes = [...this.state.notes]
+    newNotes[ind].text = this.state.editText
+    this.setState({
+      notes: newNotes
+    })
+    this.handleClose()
+  }
+
+  handleEditChange(e){
+    this.setState({
+      editText: e.target.value
     })
   }
 
@@ -61,7 +77,6 @@ class App extends Component {
   deleteNote(id) {
     let notesArr = [...this.state.notes];
     notesArr.splice(id, 1);
-    console.log(id);
     this.setState({
        notes: notesArr
      })
@@ -140,8 +155,6 @@ class App extends Component {
           </Typography>
       </Container>
     </React.Fragment>
-
-
     )
   }
 }

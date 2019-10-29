@@ -1,16 +1,17 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
+import EditText from './EditText';
+import EditButton from './EditButton';
 
-const useStyles = makeStyles(theme => ({
-  typography: {
-    padding: theme.spacing(2),
-  },
-}));
 
-export default function EditPopper({ target , isOpen , text, handleClose}) {
-  const classes = useStyles();
+
+export default function EditPopper({ target, 
+  ind , 
+  isOpen , 
+  text, handleClose, 
+  handleEditConfirm,
+  handleEditChange
+}) {
 
   const id = isOpen ? 'simple-popover' : undefined;
   let anchorEl = target? target : null;
@@ -31,7 +32,13 @@ export default function EditPopper({ target , isOpen , text, handleClose}) {
           horizontal: 'center',
         }}
       >
-        <Typography className={classes.typography} onClick={() => handleClose() } >{text}</Typography>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          handleEditConfirm( ind )
+          }}>
+        <EditText text={text} handleEditChange={handleEditChange} />
+        <EditButton type='submit' />
+        </form>
       </Popover>
     </div>
   );
