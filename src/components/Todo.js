@@ -5,7 +5,6 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { List, ListItem } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
@@ -47,7 +46,6 @@ const TodoList = ({notes, toggleCheck, deleteNote, handleEdit}) => {
 
     return(
         <List >  
-        <ListSubheader>Todo List</ListSubheader>
           {newTodos}
       </List>  
     );
