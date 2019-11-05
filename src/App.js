@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import TodoList from './components/Todo'
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import AddTodo from './components/AddTodo';
 import EditPopper from './components/editTodo/EditPopper';
 import ToggleButtons from './components/ToggleButtons';
+import AppBar from './components/Toolbar';
+import TodoListContainer from './components/TodoListContainer'
+import Container from '@material-ui/core/Container';
+
 
 class App extends Component {
 
@@ -133,27 +135,30 @@ class App extends Component {
   render() {
 
     return (
-      <React.Fragment>
-      <CssBaseline />
-      <Container maxWidth="sm">
-        <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
+      <div>
+
+      <AppBar />
+        <Container maxWidth="sm" >
+        <Typography component="div" style={{height: '100vh' }} >
+        <TodoListContainer>
         <ToggleButtons handleGroupButton={this.handleGroupButton.bind(this)} />
-        <TodoList notes={this.state.notes}
-          toggleCheck={this.toggleNote.bind(this) }
-          deleteNote={ this.deleteNote.bind(this) }
-          handleEdit = {this.handleEdit.bind(this)}
-          />
-          <AddTodo addNote={this.addNote.bind(this)}
-                  updateNoteText={this.updateNoteText.bind(this)}
-                  text={this.state.noteText}
-          />
-          {this.state.isOpen ? 
-          this.state.popper
-          : null
-          }
-          </Typography>
-      </Container>
-    </React.Fragment>
+          <TodoList notes={this.state.notes}
+            toggleCheck={this.toggleNote.bind(this) }
+            deleteNote={ this.deleteNote.bind(this) }
+            handleEdit = {this.handleEdit.bind(this)}
+            />
+        </TodoListContainer>
+        <AddTodo addNote={this.addNote.bind(this)}
+                updateNoteText={this.updateNoteText.bind(this)}
+                text={this.state.noteText}
+                />
+        {this.state.isOpen ? 
+        this.state.popper
+        : null
+        }
+        </Typography>
+        </Container>
+    </div>
     )
   }
 }
