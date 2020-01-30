@@ -6,9 +6,11 @@ const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexGrow: 5
   },
   input: {
     margin: theme.spacing(1),
+    width: '75%'
   },
 }));
 
