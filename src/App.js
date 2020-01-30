@@ -142,6 +142,7 @@ class App extends Component {
         <Container maxWidth="sm">
           <Typography component="div" style={{height: '100vh'}}>
             <TodoListContainer>
+            <h3>Lista de To-do's </h3>
               <ToggleButtons
                 handleGroupButton={this.handleGroupButton.bind(this)}
               />
