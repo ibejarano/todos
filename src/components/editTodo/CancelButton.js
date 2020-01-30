@@ -15,11 +15,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ConfirmButton({type}) {
+export default function ConfirmButton({type, handleClose}) {
   const classes = useStyles();
 
   return (
     <Fab
+      onClick={handleClose}
+      size='small'
       type={type}
       color="secondary"
       aria-label="edit"

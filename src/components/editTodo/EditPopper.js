@@ -48,9 +48,8 @@ export default function EditPopper({
           }}>
           <EditText text={text} handleEditChange={handleEditChange} />
           <ConfirmButton type="submit" />
-          <CancelButton type="button" onClick={ () =>{
-            console.log('Hola!')
-            handleEditConfirm(-1)}} />
+          <CancelButton type="button" 
+            handleClose={handleClose}/>
         </form>
       </Popover>
     </div>

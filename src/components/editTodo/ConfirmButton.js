@@ -19,14 +19,14 @@ export default function ConfirmButton({type}) {
   const classes = useStyles();
 
   return (
-    <div>
-      <Fab
-        type={type}
-        color="primary"
-        aria-label="edit"
-        className={classes.fab}>
-        <DoneIcon />
-      </Fab>
-    </div>
+    <Fab
+      onClick={() => console.log('you are clicking me!')}
+      size="small"
+      type={type}
+      color="primary"
+      aria-label="edit"
+      className={classes.fab}>
+      <DoneIcon />
+    </Fab>
   );
 }

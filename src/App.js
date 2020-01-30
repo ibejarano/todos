@@ -45,16 +45,12 @@ class App extends Component {
   }
 
   handleEditConfirm(ind) {
-    console.log('calling...')
-    if(ind >= 0){
+    console.log('calling edit confirm...')
     const newNotes = [...this.state.notes];
     newNotes[ind].text = this.state.editText;
     this.setState({
       notes: newNotes,
     });
-    }
-    console.log('calling...')
-    console.log(ind)
     this.handleClose();
   }
 
