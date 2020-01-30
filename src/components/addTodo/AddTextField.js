@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 200,
+    width: '80%',
   },
 }));
 
@@ -21,7 +21,7 @@ export default function AddTextField({ updateNoteText, text }) {
         <TextField
           id="outlined-basic"
           className={classes.textField}
-          label="Add new Todo"
+          label="Nuevo To-do"
           margin="normal"
           variant="outlined"
           type="text"
