@@ -45,7 +45,6 @@ class App extends Component {
   }
 
   handleEditConfirm(ind) {
-    console.log('calling edit confirm...')
     const newNotes = [...this.state.notes];
     newNotes[ind].text = this.state.editText;
     this.setState({

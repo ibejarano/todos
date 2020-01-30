@@ -20,7 +20,6 @@ export default function ConfirmButton({type}) {
 
   return (
     <Fab
-      onClick={() => console.log('you are clicking me!')}
       size="small"
       type={type}
       color="primary"
